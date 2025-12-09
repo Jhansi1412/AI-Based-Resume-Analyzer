@@ -21,7 +21,7 @@ The app extracts the text, compares them using **OpenAI** (with a local Java fal
 **Backend**
 
 - Java 17+ (tested with Java 23)
-- Spring Boot 3.3.x
+- Spring Boot 3.9.11
 - Maven
 
 **AI & Analysis**
