@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AI Resume Analyzer</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<div class="app">
+    <header class="header">
+        <h1>AI Resume Analyzer</h1>
+        <p>Upload your resume and job description (PDF / DOC / DOCX / TXT) to see how well they match.</p>
+    </header>
+
+    <main class="layout">
+        <section class="card">
+            <h2>Upload Files</h2>
+
+            <form th:action="@{/analyze}" method="post" enctype="multipart/form-data">
+                <label>
+                    Resume File
+                    <input type="file" name="resumeFile" accept=".pdf,.doc,.docx,.txt" required>
+                </label>
+
+                <label>
+                    Job Description File
+                    <input type="file" name="jdFile" accept=".pdf,.doc,.docx,.txt" required>
+                </label>
+
+                <p class="hint">We extract text using Apache Tika and send it to the AI engine for analysis.</p>
+
+                <div class="actions">
+                    <button type="submit">Analyze Resume</button>
+                </div>
+            </form>
+
+            <div th:if="${error}" class="alert-error" th:text="${error}"></div>
+        </section>
+
+        <section class="card info-card">
+            <h2>How it Works</h2>
+            <ol>
+                <li>You upload resume & JD (PDF/DOC/DOCX/TXT).</li>
+                <li>Java extracts text using Apache Tika.</li>
+                <li>We call OpenAI’s model with both texts.</li>
+                <li>You get a visual score, skills match, and suggestions.</li>
+            </ol>
+            <p class="note">Tech: Java, Spring Boot, HTML, CSS, Apache Tika, OpenAI API.</p>
+        </section>
+    </main>
+
+    <footer class="footer">
+        Built with Java · HTML · CSS · AI API
+    </footer>
+</div>
+</body>
+</html>

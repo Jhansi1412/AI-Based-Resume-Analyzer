@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AI Resume Analyzer - Result</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<div class="app">
+    <header class="header">
+        <h1>Analysis Result</h1>
+        <p>Your resume vs the uploaded job description.</p>
+    </header>
+
+    <main class="layout-result">
+        <section class="card result-main" th:if="${analysisResult}">
+            <div class="score-wrapper">
+                <div class="score-circle"
+                     th:style="'--score:' + ${analysisResult.matchScore}">
+                    <div class="score-value"
+                         th:text="${analysisResult.matchScore} + '%'">75%</div>
+                    <div class="score-label">Match Score</div>
+                </div>
+
+                <div class="score-bar">
+                    <div class="score-bar-fill"
+                         th:style="'width:' + ${analysisResult.matchScore} + '%'"></div>
+                </div>
+            </div>
+
+            <div class="chips-block">
+                <h2>Matched Skills</h2>
+                <div class="chips">
+                    <span th:each="s : ${analysisResult.matchedSkills}"
+                          class="chip chip-success"
+                          th:text="${s}">Java</span>
+                    <span th:if="${#lists.isEmpty(analysisResult.matchedSkills)}"
+                          class="chip chip-empty">None detected</span>
+                </div>
+
+                <h2>Missing / Recommended Skills</h2>
+                <div class="chips">
+                    <span th:each="s : ${analysisResult.missingSkills}"
+                          class="chip chip-warning"
+                          th:text="${s}">Docker</span>
+                    <span th:if="${#lists.isEmpty(analysisResult.missingSkills)}"
+                          class="chip chip-empty">None detected</span>
+                </div>
+            </div>
+
+            <div class="suggestions">
+                <h2>AI Suggestions to Improve Your Resume</h2>
+                <ul>
+                    <li th:each="s : ${analysisResult.suggestions}"
+                        th:text="${s}">
+                        Add more details about your Spring Boot project...
+                    </li>
+                    <li th:if="${#lists.isEmpty(analysisResult.suggestions)}">
+                        No suggestions were provided by the AI.
+                    </li>
+                </ul>
+            </div>
+
+            <div class="actions">
+                <a th:href="@{/}">
+                    <button type="button">Analyze Another</button>
+                </a>
+            </div>
+        </section>
+
+        <section class="card side-panel">
+            <h2>Preview</h2>
+
+            <h3>Resume (Extracted Text)</h3>
+            <pre th:text="${resumePreview}">Resume text...</pre>
+
+            <h3>Job Description (Extracted Text)</h3>
+            <pre th:text="${jobDescriptionPreview}">JD text...</pre>
+        </section>
+    </main>
+
+    <footer class="footer">
+        Built with Java · HTML · CSS · AI API
+    </footer>
+</div>
+</body>
+</html>
